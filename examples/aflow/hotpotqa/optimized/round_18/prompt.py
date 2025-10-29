@@ -1,0 +1,2 @@
+# This prompt is used by the ReviewSolutions operator to ensure the generated solutions are consistent and contextually appropriate.
+REVIEW_PROMPT = "Please review the following solution for consistency and contextual relevance: "

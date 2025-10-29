@@ -1,0 +1,2 @@
+VALIDATE_PROMPT = "Verify the reliability and consistency of the selected solution. Suggest improvements if necessary, or confirm with 'Validated' if it's reliable."
+DETAILED_REVIEW_PROMPT = "Provide a detailed review of the solution, checking for logical consistency, depth, and precision. Offer specific feedback for improvement or confirm with 'Approved' if optimal."

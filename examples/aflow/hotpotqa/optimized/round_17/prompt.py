@@ -1,0 +1,1 @@
+REVIEW_PROMPT = "Please review the following solutions, provide feedback on their consistency and accuracy, and suggest improvements if necessary:"

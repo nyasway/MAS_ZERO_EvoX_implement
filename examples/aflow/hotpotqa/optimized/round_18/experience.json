@@ -1,0 +1,7 @@
+{
+    "father node": 14,
+    "modification": "# Added a Custom operator named \"ReviewSolutions\" to review and provide feedback on the generated solutions before selecting the final one.\n# Integrated the ReviewSolutions operator after generating the solutions and before the QAScEnsemble step to enhance the reliability of the chosen solution.\n# Updated the graph to utilize this new operator for better solution consistency.\n# Introduced a new prompt named REVIEW_PROMPT for the ReviewSolutions operator.",
+    "before": 0.7878027435739106,
+    "after": 0.03527944043284911,
+    "succeed": false
+}

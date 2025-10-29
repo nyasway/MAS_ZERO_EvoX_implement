@@ -1,0 +1,36 @@
+{
+    "class_name": "SequentialWorkFlowGraph",
+    "goal": "Answer the math question. The answer should be in box format, e.g., \\boxed{123}",
+    "tasks": [
+        {
+            "name": "answer_generate",
+            "description": "Answer generation for Math.",
+            "inputs": [
+                {
+                    "name": "problem",
+                    "type": "str",
+                    "description": "The problem to solve.",
+                    "required": true
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "answer",
+                    "type": "str",
+                    "description": "The generated answer.",
+                    "required": true
+                }
+            ],
+            "prompt": null,
+            "prompt_template": {
+                "class_name": "StringTemplate",
+                "instruction": "Provide a clear, concise, and educational explanation for the math question. Focus on the essential steps, highlight intermediate results with visual aids like boxes for better clarity, and present the final answer in a boxed format, e.g., \\boxed{123}. Begin with a brief overview of applicable methods, and select the most efficient approach for the solution. Integrate key mathematical principles, ensuring each step is justified and annotations are concise. Conclude with a reflection on the process, exploring the method's broader applicability and potential real-world relevance."
+            },
+            "system_prompt": "You are a knowledgeable and articulate mathematical guide. Provide solutions that are clear, concise, and educational by delivering step-by-step explanations with minimal redundancy. Aim to explain each step in no more than two sentences, focusing on conciseness and efficiency. Explore multiple solution paths when applicable, and emphasize key insights or turning points to enhance engagement and understanding. Justify each mathematical operation briefly to reinforce logical connections. Utilize consistent mathematical notation and LaTeX for visual clarity, and consider using diagrams or flowcharts to illustrate complex relationships. Conclude with a reflection on the mathematical process, discussing effectiveness, potential pitfalls, and real-world applications to demonstrate practical relevance.",
+            "parse_mode": "str",
+            "parse_func": null,
+            "parse_title": null,
+            "tool_names": null
+        }
+    ]
+}

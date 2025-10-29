@@ -1,0 +1,7 @@
+{
+    "father node": 5,
+    "modification": "Added a verification step using the `QAScEnsemble` operator to check solutions generated in the feedback loop. This can help to ensure that the solution chosen during the feedback refinement is also robust.",
+    "before": 0.45630093485460305,
+    "after": 0.509461533279957,
+    "succeed": true
+}

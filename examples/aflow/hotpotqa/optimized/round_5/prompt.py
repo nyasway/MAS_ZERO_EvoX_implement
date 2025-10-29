@@ -1,0 +1,1 @@
+EVALUATE_PROMPT = "Evaluate the provided solution for completeness, correctness, and clarity. Suggest improvements if necessary, or respond with 'Approved' if it's already optimal."

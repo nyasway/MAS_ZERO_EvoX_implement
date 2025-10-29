@@ -4,12 +4,12 @@ from typing import Any, Callable
 
 from evoagentx.benchmark import HotPotQA
 from evoagentx.optimizers import AFlowOptimizer
-from evoagentx.models import LiteLLMConfig, LiteLLM, OpenAILLMConfig, OpenAILLM 
+from evoagentx.models import LiteLLMConfig, LiteLLM, OpenAILLMConfig, OpenAILLM, SiliconFlowConfig, SiliconFlowLLM
 
 
 load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+OPENAI_API_KEY_O = os.getenv("OPENAI_API_KEY_O")
+OPENAI_API_KEY_E = os.getenv("OPENAI_API_KEY_E")
 
 EXPERIMENTAL_CONFIG = {
     "humaneval": {
@@ -65,10 +65,29 @@ class HotPotQASplits(HotPotQA):
 
 def main():
 
-    claude_config = LiteLLMConfig(model="anthropic/claude-3-5-sonnet-20240620", anthropic_key=ANTHROPIC_API_KEY)
-    optimizer_llm = LiteLLM(config=claude_config)
-    openai_config = OpenAILLMConfig(model="gpt-4o-mini", openai_key=OPENAI_API_KEY)
-    executor_llm = OpenAILLM(config=openai_config)
+    # claude_config = LiteLLMConfig(model="anthropic/claude-3-5-sonnet-20240620", anthropic_key=ANTHROPIC_API_KEY)
+    # optimizer_llm = LiteLLM(config=claude_config)    
+
+    # openai_config = OpenAILLMConfig(model="gpt-4o-mini", openai_key=OPENAI_API_KEY)
+    # executor_llm = OpenAILLM(config=openai_config)
+
+    optimizer_config  = OpenAILLMConfig(
+        model="gpt-4o",
+        openai_key= OPENAI_API_KEY_O,
+        temperature=0.8,
+        max_tokens=1000,
+        timeout=120
+        )
+    optimizer_llm = OpenAILLM(config=optimizer_config)
+    
+    executor_config = OpenAILLMConfig(
+        model="gpt-4o-mini",
+        openai_key= OPENAI_API_KEY_E,
+        temperature=0.4,
+        max_tokens=1000,
+        timeout=120
+        )
+    executor_llm = OpenAILLM(config=executor_config) 
 
     # load benchmark
     hotpotqa = HotPotQASplits()

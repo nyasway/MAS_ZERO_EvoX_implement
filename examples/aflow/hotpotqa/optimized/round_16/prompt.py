@@ -1,0 +1,1 @@
+VERIFY_PROMPT = "Please review the following solution for contextual consistency: "

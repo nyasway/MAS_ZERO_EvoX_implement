@@ -126,7 +126,12 @@ Your Task: Given a user's goal, break it down into clear, manageable sub-tasks t
 ### Instructions:
 1. **Understand the Goal**: Identify the core objective the user is trying to achieve. 
 2. **Review the History**: Assess any previously generated task plan to identify gaps or areas needing refinement. 
-3. **Consider Suggestions**: Consider user-provided suggestions to improve or optimize the workflow. 
+3. **Consider Suggestions**: Use the provided suggestions to understand what should be improved conceptually, but do NOT reuse, edit, or extend the previous workflow.
+3.1 **Principle for designing the workflow**:
+- You must generate a **completely new workflow** from scratch. 
+- Treat the previous workflow as invalid — use it only for contextual awareness. Do NOT continue, extend, or modify any part of it.
+- Do NOT reuse any agent in the historical plan as existing agents, design them anew even if they have the same functionality.
+- If you don't follow this principle, your output will be **rejected**.
 
 4. **Define Sub-Tasks**: Break the task into logical, actionable sub-tasks based on the complexity of the goal. 
 
@@ -289,16 +294,10 @@ Explanation: The minimum window substring "BANC" includes 'A', 'B', and 'C' from
 
 TASK_PLANNING_OUTPUT_FORMAT = """
 ### Output Format
-Your final output should ALWAYS in the following format:
-
-## Thought 
-Provide a brief explanation of your reasoning for breaking down the task and the chosen task structure.  
-
-## Goal
-Restate the user's goal clearly and concisely.
-
-## Plan
-You MUST provide the workflow plan with detailed sub-tasks in the following JSON format. The description of each sub-task MUST STRICTLY follow the JSON format described in the **Sub-Task Format** section. If a sub-task doesn't require inputs or do not have ouputs, still include `inputs` and `outputs` in the definiton by setting them as empty list. 
+Step 1: Restate the user's goal clearly and concisely and briefly explain your reasoning for breaking down the task and the chosen task structure.
+Step 2: Then output only the JSON object defining sub_tasks, as shown below. Do not include markdown or any text after the JSON.
+- You MUST provide the workflow plan with detailed sub-tasks in the following JSON format. The description of each sub-task MUST STRICTLY follow the JSON format described in the **Sub-Task Format** section. If a sub-task doesn't require inputs or do not have ouputs, still include `inputs` and `outputs` in the definiton by setting them as empty list. 
+- If the workflow plan is not a well-formed JSON, your output will be **rejected**.
 ```json
 {{
     "sub_tasks": [
@@ -318,14 +317,32 @@ You MUST provide the workflow plan with detailed sub-tasks in the following JSON
 -----
 Let's begin. 
 
-### History (previously generated task plan):
+### History (previously generated task plan, for understanding only):
 {history}
 
-### Suggestions (idea of how to design the workflow or suggestions to refine the history plan):
+### Suggestions (idea of how to design the workflow or suggestions to refine the history plan, for consideration only):
 {suggestion}
+
+### Mandatory Compliance Rules (DO NOT IGNORE)
+You MUST carefully read and strictly implement every improvement or correction mentioned in the Suggestions section.
+For each suggestion, explicitly address:
+1. What the issue was.
+2. What you changed to fix it.
+3. How the fix is reflected in this iteration's output.
+If any suggestion is ignored, your output will be **rejected**.
 
 ### User's Goal:
 {goal}
+
+### Self-Validation (DO NOT SKIP)
+Before you output your final JSON, perform the following checks:
+1. The JSON starts with 'sub_tasks' key.
+2. Every sub-task contains all required fields: `name`, `description`, `reason`, `inputs`, and `outputs`.  
+3. Each input/output entry includes **name**, **type**, **required**, and **description** fields.  
+4. The output is a **valid JSON** object that can be parsed without errors.  
+5. No markdown syntax, explanation, or commentary — only raw JSON should be returned.  
+6. Every suggestion is addressed. No previous errors are repeated.
+If any of these checks fail, revise your output **before returning**.
 
 Output:
 """

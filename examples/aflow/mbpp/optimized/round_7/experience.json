@@ -1,0 +1,7 @@
+{
+    "father node": 5,
+    "modification": "Add error handling for CustomCodeGenerate and ScEnsemble steps to improve robustness",
+    "before": 0.7999999999999999,
+    "after": 0.7933333333333333,
+    "succeed": false
+}

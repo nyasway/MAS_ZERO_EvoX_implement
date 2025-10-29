@@ -1,0 +1,7 @@
+{
+    "father node": 11,
+    "modification": "Add the ScEnsemble operator to the workflow to select the best solution from multiple candidates.",
+    "before": 0.8066666666666666,
+    "after": 0.7666666666666666,
+    "succeed": false
+}

@@ -1,3 +1,4 @@
+import os 
 from dotenv import load_dotenv
 
 from evoagentx.agents.agent_manager import AgentManager
@@ -11,6 +12,8 @@ from evoagentx.prompts import StringTemplate
 from evoagentx.workflow import SequentialWorkFlowGraph
 
 load_dotenv()
+OPENAI_API_KEY_O = os.getenv("OPENAI_API_KEY_O")
+OPENAI_API_KEY_E = os.getenv("OPENAI_API_KEY_E")
 
 class HotPotQASplits(HotPotQA):
 
@@ -58,11 +61,20 @@ hotpotqa_graph_data = {
 
 def main(): 
 
-    executor_config = OpenAILLMConfig(model="gpt-4o-mini")
-    executor_llm = OpenAILLM(config=executor_config)
-
-    optimizer_config = OpenAILLMConfig(model="gpt-4o")
+    optimizer_config  = OpenAILLMConfig(
+    model="gpt-4o-mini",
+    openai_key= OPENAI_API_KEY_O,
+    temperature=0.8,
+    max_tokens=1000)
     optimizer_llm = OpenAILLM(config=optimizer_config)
+    
+    executor_config = OpenAILLMConfig(
+    model="gpt-3.5-turbo",
+    openai_key= OPENAI_API_KEY_E,
+    temperature=0.4,
+    max_tokens=1000
+    )
+    executor_llm = OpenAILLM(config=executor_config)
 
     benchmark = HotPotQASplits()
     workflow_graph = SequentialWorkFlowGraph.from_dict(hotpotqa_graph_data)

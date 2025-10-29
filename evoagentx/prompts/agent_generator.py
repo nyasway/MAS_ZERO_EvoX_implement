@@ -205,6 +205,10 @@ You are tasked with generating agents to complete a sub-task within a workflow. 
 - Review the predefined agents and their descriptions in the "### Candidate Agents" section.
 - Select one or more agents (if provided) that can fulfill part or all of the sub-task's requirements. 
 - If the provided agents are not relevant, you may choose not to select any. Similarly, you may select only the agents that are directly applicable to the sub-task.
+4.1 **Important Clarification**
+- You must NOT treat any agents listed in the "### History" section as available candidates.  
+- Only agents listed in the "### Candidate Agents" section are reusable or selectable in this round.  
+- If you want to reuse a previous agent, it must explicitly appear again under "### Candidate Agents".
 5. **Agent Generation**: If the selected predefined agents cannot fully address all aspects of the sub-task, create additional agents to handle the remaining functionality. Follow these principles when creating new agents:
 5.1 **Agent Structure**: Each generated agent MUST be defined in the following JSON format:
 ```json
@@ -225,7 +229,8 @@ You are tasked with generating agents to complete a sub-task within a workflow. 
             "name": "the output's name", 
             "type": "string/int/float/other_type",
             "required": true (always set the `required` field of outputs as true), 
-            "description": "Description of the output produced by this agent."
+            "description": "Description of the output produced by this agent.",
+            "feedback": "If the task is too hard for the agent to solve, set this field to the string 'TOO HARD' to indicate the sub-task is unsolvable in its current form, and list the missing conditions in the description."
         }},
         ...
     ],
@@ -254,7 +259,10 @@ You should STRICTLY use the above template to generate the `prompt` field of the
 - In the '### Objective' section, you should provide a clear description of the agent's goal. 
 - In the '### Instructions' section, you should generate step-by-step instructions based on the following principles: 
     - Provide a clear and logical sequence of actions the agent should follow to complete its task. You should provide **meaningful, insightful, and detailed instructions** that can help the agent to achieve the objective. 
-    - Reference the input variables using placeholders (e.g., <input>{{input_name}}</input>) that match the agent's `inputs`. You MUST use a SINGLE pair of curly brace warpped by "<input>xxx</input>" to reference the inputs.
+    - Reference the input variables using placeholders (e.g., <input>{{goal}}</input>) that match the agent's `inputs`. You MUST use a SINGLE pair of curly brace warpped by "<input>xxx</input>" to reference the inputs.
+    - You MUST reference **every** input defined in the agent’s `inputs` field at least once in your '### Instructions' section using `<input>{{input_name}}</input>`.
+    - This includes the `goal` input, even if it seems unnecessary. Always include a line like:: 'Review the context provided in the user's goal: <input>{{goal}}</input>'.
+    - If any input variable is missing from your prompt, your output will be **rejected**.
     - Include instructions on how the agent can use relevant tools from the "### Tools" section to assist with its task if applicable. 
 - In the '### Output Format' section, 
     - For the '## Thought' subsection, keep the text 'Briefly explain the reasoning process for achieving the objective'. 
@@ -311,17 +319,11 @@ You should STRICTLY use the above template to generate the `prompt` field of the
 }}
 ```
 ### Output Format
-Your final output should ALWAYS in the following format:
-
-## Thought 
-Briefly explain the reasoning process for the selection of predefined agents and the generation of new agents.
-
-## Objective
-Restate the objectives and requirements of the sub-task. 
-
-## Selected or Generated Agents
+Step 1: Briefly explain the reasoning process for the selection of predefined agents and the generation of new agents and restate the objectives and requirements of the sub-task. 
+Step 2: Then output only the JSON object defining selected or generated agents.
 - You MUST output the selected and generated agents in the following JSON format. Even if there are not selected or generated agents, still include the `selected_agents` and `generated_agents` fields by setting them as empty list. 
 - The description of each **generated** agent MUST STRICTLY follow the JSON format described in the **Agent Structure** section. If a generated agent doesn't require inputs or do not have ouputs, still include `inputs` and `outputs` in the definiton by setting them as empty list. 
+- You MUST only output the JSON object with `selected_agents` and `generated_agents`, and NOTHING else.
 ```json
 {{
     "selected_agents": [
@@ -340,10 +342,13 @@ Restate the objectives and requirements of the sub-task.
 ----- 
 Let's begin. 
 
-### History (previously selected or generated agents):
+### History (previously used agents — for reference only):
 {history}
 
 ### Suggestions (suggestions to refine the selected or generated agents):
+Below are the agents that were used or generated in **previous iterations**.  
+These agents are **NOT available** for direct selection in this round unless they are also explicitly listed again in the "### Candidate Agents" section.  
+You should only refer to them for **context or continuity**, not as reusable components. 
 {suggestion}
 
 ### Candidate Agents
@@ -364,6 +369,14 @@ If tools are provided, you should follow the following rules:
 
 ### Sub-Task:
 {task}
+
+### Self-Validation (DO NOT SKIP)
+Before returning your final JSON:
+1. Check that each input variable listed in the sub-task definition is referenced in the "### Instructions" section.
+2. If any are missing (including `goal`), revise your prompt accordingly.
+3. Output your JSON only after confirming full compliance.
+4. Ensure that none of the agents from the "### Suggestions" section are included in your "selected_agents" field unless they also appear in "### Candidate Agents".
+5. If you believe the sub-task cannot be solved, you MUST still return a valid JSON object containing a single generated agent with "feedback": "TOO HARD". Never output the string 'TOO HARD' by itself.
 
 Output: 
 """

@@ -1,0 +1,3 @@
+EVALUATE_PROMPT = "Evaluate the provided solution for completeness, correctness, and clarity. Suggest improvements if necessary, or respond with 'Approved' if it's already optimal."
+REVIEW_PROMPT = "Further review the verified solution for any potential improvements on precision and depth. Suggest if additional refinements are necessary, or respond with 'Approved' if deemed optimal."
+DETAILED_REVIEW_PROMPT = "Provide a detailed review of the solution, checking for logical consistency, depth, and precision. Offer specific feedback for improvement or confirm with 'Approved' if optimal."

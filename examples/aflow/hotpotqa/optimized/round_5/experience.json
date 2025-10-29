@@ -1,0 +1,7 @@
+{
+    "father node": 3,
+    "modification": "Added a feedback loop to evaluate and potentially improve chosen solutions. The feedback loop uses the 'custom' method to re-evaluate the final solution.",
+    "before": 0.7369829590699156,
+    "after": 0.45630093485460305,
+    "succeed": false
+}

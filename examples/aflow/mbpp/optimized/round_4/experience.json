@@ -1,0 +1,7 @@
+{
+    "father node": 2,
+    "modification": "Added ScEnsemble operator to select the best solution from multiple generated solutions by using a consistency check before testing.",
+    "before": 0.7799999999999999,
+    "after": 0.0,
+    "succeed": false
+}

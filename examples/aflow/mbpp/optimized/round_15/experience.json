@@ -1,0 +1,7 @@
+{
+    "father node": 13,
+    "modification": "Add a step to validate solutions after generation, before selecting the best one with ScEnsemble.",
+    "before": 0.7999999999999999,
+    "after": 0.0,
+    "succeed": false
+}

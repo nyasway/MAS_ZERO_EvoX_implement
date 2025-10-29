@@ -1,0 +1,7 @@
+{
+    "father node": 2,
+    "modification": "Added a self-consistency ensemble step to the workflow to improve solution selection.",
+    "before": 0.7818181818181819,
+    "after": 0.8242424242424242,
+    "succeed": true
+}

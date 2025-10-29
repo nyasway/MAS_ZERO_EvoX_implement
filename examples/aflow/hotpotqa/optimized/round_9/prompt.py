@@ -1,0 +1,1 @@
+FEEDBACK_PROMPT = "Evaluate and enhance the following solution. Provide improvements or confirm its validity based on logical consistency and relevance. Solution:"

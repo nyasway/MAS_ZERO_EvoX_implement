@@ -1,0 +1,36 @@
+{
+    "class_name": "SequentialWorkFlowGraph",
+    "goal": "Answer the question based on the context. The answer should be a direct response to the question, without including explanations or reasoning.",
+    "tasks": [
+        {
+            "name": "answer_generate",
+            "description": "Answer the question based on the context.",
+            "inputs": [
+                {
+                    "name": "problem",
+                    "type": "str",
+                    "description": "The problem to solve.",
+                    "required": true
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "answer",
+                    "type": "str",
+                    "description": "The answer to the problem.",
+                    "required": true
+                }
+            ],
+            "prompt": null,
+            "prompt_template": {
+                "class_name": "StringTemplate",
+                "instruction": "Begin with the final answer in the \u2018answer\u2019 field, followed by a concise explanation in the \u2018thought\u2019 field. Ensure your explanation in the \u2018thought\u2019 field is concise, highlighting only essential reasoning that directly leads to the answer. Focus on context that directly pertains to the question, minimizing extraneous details that do not contribute to understanding the final answer. For clarity, format your output as follows: <thought>Brief explanation of reasoning.</thought> <answer>Direct answer.</answer>. For example: <thought>Scott Stapp is the former frontman of Creed, which disbanded in 2004.</thought> <answer>2004</answer>."
+            },
+            "system_prompt": "You are a knowledgeable assistant tasked with providing clear, concise, and accurate answers. Structure your responses by directly stating the answer first, followed by a streamlined explanation. Aim to communicate your thoughts succinctly, focusing on relevant context that enhances understanding. Ensure that your response is logically structured, starting with the answer and followed by any necessary context. Always consider your audience's knowledge level and stay focused on the core task, avoiding unnecessary details. Use examples to clarify your responses when appropriate.",
+            "parse_mode": "xml",
+            "parse_func": null,
+            "parse_title": null,
+            "tool_names": null
+        }
+    ]
+}

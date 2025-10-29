@@ -1,0 +1,7 @@
+{
+    "father node": 1,
+    "modification": "Added the ScEnsemble operator to refine the final solution selection process.",
+    "before": 0.7818181818181819,
+    "after": 0.806060606060606,
+    "succeed": true
+}

@@ -1,0 +1,7 @@
+{
+    "father node": 0,
+    "modification": "Added the Test operator to the workflow to evaluate the initially generated solution. If the solution fails the tests, added a step to prompt the model to improve the solution using the Custom operator with a specific instruction for improvement.",
+    "before": 0.7466666666666667,
+    "after": 0.8066666666666666,
+    "succeed": true
+}

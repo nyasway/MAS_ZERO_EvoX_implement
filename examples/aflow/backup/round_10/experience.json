@@ -1,0 +1,7 @@
+{
+    "father node": 7,
+    "modification": "- Added a feedback loop where if the `Test` operator fails, the `Custom` operator generates hints or feedback for improving the solution, and then a `CustomCodeGenerate` operator is used again to generate a revised solution.\n- Introduced a new prompt `GENERATE_FEEDBACK_PROMPT` for generating feedback on failed solutions.\n- Utilized the `Custom` operator for feedback generation.",
+    "before": 0.806060606060606,
+    "after": 0.8121212121212121,
+    "succeed": true
+}

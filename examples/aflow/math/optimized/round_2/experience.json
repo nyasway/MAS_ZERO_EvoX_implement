@@ -1,0 +1,7 @@
+{
+    "father node": 0,
+    "modification": "add ScEnsemble operator to improve solution consistency by aggregating multiple responses",
+    "before": 0.62,
+    "after": 0.6866666666666666,
+    "succeed": true
+}
